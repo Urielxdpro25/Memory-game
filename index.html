@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memory game</title>
+</head>
+
+<body class="body">
+    <style>
+        .body {
+            background-color: #e77c7c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contenedor {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+            width: auto;
+            height: auto;
+            background-color: #f0f0f0;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            background-color: #912828;
+            border-radius: 10px;
+            border: 2px solid #000;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .front {
+            background-color: #18311a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .back {
+            background-color: #1a27b8;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card.flipped .front {
+            display: none;
+        }
+
+        .card.flipped .back {
+            display: flex;
+        }
+
+        .btn {
+            background-color: #1dda4f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+
+    <button id="startButton" class="btn">Iniciar Juego</button>
+    <br>
+    <div class="contenedor"> <!-- Contenedor de las cartas -->
+
+        <div class="card" id="card1">
+             <div class="back"></div>   
+            <div class="front">👔</div>
+           
+        </div>
+
+        <div class="card" id="card2">
+            <div class="front">🎀</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card3">
+            <div class="front">😭</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card4">
+            <div class="front">🍐</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card5">
+            <div class="front">🎀</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card6">
+            <div class="front">🍐</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card7">
+            <div class="front">👌</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card8">
+            <div class="front">🧥</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card9">
+            <div class="front">👔</div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" id="card10">
+            <div class="front">👌</div>
+            <div class="back"></div>
+        </div>
+        <div class="card" id="card11">
+            <div class="front">😭</div>
+            <div class="back"></div>
+        </div>
+        <div class="card" id="card12">
+            <div class="front">🧥</div>
+            <div class="back"></div>
+        </div>
+
+    </div> <!-- Cierre del contenedor -->
+
+
+
+<script>
+
+    const contenedor = document.querySelector('.contenedor');
+    const startButton = document.getElementById('startButton');
+
+    const cards = document.querySelectorAll('.card');
+
+    let flippedCards = [];
+
+
+    startButton.addEventListener("click", empezarJuego);
+
+
+    function empezarJuego() {
+
+        cards.forEach(card => {
+
+            card.classList.add('flipped');
+
+            card.addEventListener('click', function () {
+
+                if (flippedCards.length === 2) {
+                    return;
+                }
+
+                if (flippedCards.includes(this)) {
+                    return;
+                }
+
+                this.classList.remove('flipped');
+
+                flippedCards.push(this);
+
+
+                if (flippedCards.length === 2) {
+
+                    verificarCartas();
+
+                }
+
+            });
+
+        });
+
+    }
+
+
+    function verificarCartas() {
+
+        const carta1 = flippedCards[0];
+        const carta2 = flippedCards[1];
+
+
+        const valor1 = carta1.querySelector('.front').textContent;
+        const valor2 = carta2.querySelector('.front').textContent;
+
+
+        if (valor1 === valor2) {
+
+            carta1.classList.add('matched');
+            carta2.classList.add('matched');
+
+            flippedCards = [];
+
+        } else {
+
+            setTimeout(function () {
+
+                carta1.classList.add('flipped');
+                carta2.classList.add('flipped');
+
+                flippedCards = [];
+
+            }, 500);
+
+        }
+
+    }
+
+
+</script>
+</body>
+
+</html>
